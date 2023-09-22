@@ -96,6 +96,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="lab6_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="lab6_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="lab6_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -110,23 +113,494 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="laboratorio-6---análisis-de-redes-sociales" class="level1">
 <h1>Laboratorio 6 - Análisis de Redes Sociales</h1>
-<div class="cell">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bernardo <span class="op">=</span> pd.read_csv(<span class="st">'./data/bernardoArevalo.csv'</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sandra <span class="op">=</span> pd.read_csv(<span class="st">'./data/sandraTorres.csv'</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>trafico <span class="op">=</span> pd.read_csv(<span class="st">'./data/traficogt.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bernardo.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>id</th>
+      <th>id_str</th>
+      <th>url</th>
+      <th>date</th>
+      <th>user</th>
+      <th>lang</th>
+      <th>rawContent</th>
+      <th>replyCount</th>
+      <th>retweetCount</th>
+      <th>...</th>
+      <th>quotedTweet</th>
+      <th>place</th>
+      <th>coordinates</th>
+      <th>inReplyToTweetId</th>
+      <th>inReplyToUser</th>
+      <th>source</th>
+      <th>sourceUrl</th>
+      <th>sourceLabel</th>
+      <th>media</th>
+      <th>_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1702109621899407575</td>
+      <td>1702109621899407575</td>
+      <td>https://twitter.com/eltuitdehoy_/status/170210...</td>
+      <td>2023-09-13 23:58:52+00:00</td>
+      <td>{'id': 46561608, 'id_str': '46561608', 'url': ...</td>
+      <td>es</td>
+      <td>@AnonGTReloaded @msemillagt @BArevalodeLeon ja...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.702089e+18</td>
+      <td>{'id': 1419402501212811265, 'username': 'AnonG...</td>
+      <td>&lt;a href="https://mobile.twitter.com" rel="nofo...</td>
+      <td>https://mobile.twitter.com</td>
+      <td>Twitter Web App</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1702109505947865192</td>
+      <td>1702109505947865192</td>
+      <td>https://twitter.com/totitafuentes/status/17021...</td>
+      <td>2023-09-13 23:58:24+00:00</td>
+      <td>{'id': 1005627722, 'id_str': '1005627722', 'ur...</td>
+      <td>es</td>
+      <td>@ASIERVERA @AztecaNoticiaGT @BArevalodeLeon Do...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.702056e+18</td>
+      <td>{'id': 291888009, 'username': 'ASIERVERA', 'di...</td>
+      <td>&lt;a href="http://twitter.com/#!/download/ipad" ...</td>
+      <td>http://twitter.com/#!/download/ipad</td>
+      <td>Twitter for iPad</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1701995859229958189</td>
+      <td>1701995859229958189</td>
+      <td>https://twitter.com/DrDavidCabrera/status/1701...</td>
+      <td>2023-09-13 16:26:49+00:00</td>
+      <td>{'id': 743252657083650048, 'id_str': '74325265...</td>
+      <td>es</td>
+      <td>Paciente de 39 años, dolor lumbar de 1 año tra...</td>
+      <td>2</td>
+      <td>17</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;a href="https://help.twitter.com/en/using-twi...</td>
+      <td>https://help.twitter.com/en/using-twitter/how-...</td>
+      <td>advertiser-interface</td>
+      <td>{'photos': [{'url': 'https://pbs.twimg.com/med...</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>1702109134387134664</td>
+      <td>1702109134387134664</td>
+      <td>https://twitter.com/Fernand0483/status/1702109...</td>
+      <td>2023-09-13 23:56:55+00:00</td>
+      <td>{'id': 1512621569834688513, 'id_str': '1512621...</td>
+      <td>es</td>
+      <td>@VicZacariasGT @soy_502 @BArevalodeLeon @msemi...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.701799e+18</td>
+      <td>{'id': 84055675, 'username': 'VicZacariasGT', ...</td>
+      <td>&lt;a href="http://twitter.com/download/android" ...</td>
+      <td>http://twitter.com/download/android</td>
+      <td>Twitter for Android</td>
+      <td>{'photos': [{'url': 'https://pbs.twimg.com/med...</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>1702108943495926143</td>
+      <td>1702108943495926143</td>
+      <td>https://twitter.com/MaxTiger502/status/1702108...</td>
+      <td>2023-09-13 23:56:10+00:00</td>
+      <td>{'id': 891058586, 'id_str': '891058586', 'url'...</td>
+      <td>es</td>
+      <td>@Igor_Bitkov No le sigan el juego a este ruso ...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.701898e+18</td>
+      <td>{'id': 707086237753090048, 'username': 'Igor_B...</td>
+      <td>&lt;a href="http://twitter.com/download/android" ...</td>
+      <td>http://twitter.com/download/android</td>
+      <td>Twitter for Android</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
 </div>
-<div class="cell">
+</div>
+</div>
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sandra.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>id</th>
+      <th>id_str</th>
+      <th>url</th>
+      <th>date</th>
+      <th>user</th>
+      <th>lang</th>
+      <th>rawContent</th>
+      <th>replyCount</th>
+      <th>retweetCount</th>
+      <th>...</th>
+      <th>quotedTweet</th>
+      <th>place</th>
+      <th>coordinates</th>
+      <th>inReplyToTweetId</th>
+      <th>inReplyToUser</th>
+      <th>source</th>
+      <th>sourceUrl</th>
+      <th>sourceLabel</th>
+      <th>media</th>
+      <th>_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1701686249797345422</td>
+      <td>1701686249797345422</td>
+      <td>https://twitter.com/Yeya16155804/status/170168...</td>
+      <td>2023-09-12 19:56:32+00:00</td>
+      <td>{'id': 1213902343311245313, 'id_str': '1213902...</td>
+      <td>es</td>
+      <td>@bernardosilvagt @BArevalodeLeon @DrGiammattei...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.701683e+18</td>
+      <td>{'id': 3337026291, 'username': 'bernardosilvag...</td>
+      <td>&lt;a href="http://twitter.com/download/android" ...</td>
+      <td>http://twitter.com/download/android</td>
+      <td>Twitter for Android</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1701686065361215632</td>
+      <td>1701686065361215632</td>
+      <td>https://twitter.com/Palomin17772524/status/170...</td>
+      <td>2023-09-12 19:55:48+00:00</td>
+      <td>{'id': 1420560045323038720, 'id_str': '1420560...</td>
+      <td>es</td>
+      <td>@_awskl @mjcabrerar @BArevalodeLeon @TSEGuatem...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.701685e+18</td>
+      <td>{'id': 390988524, 'username': '_awskl', 'displ...</td>
+      <td>&lt;a href="https://mobile.twitter.com" rel="nofo...</td>
+      <td>https://mobile.twitter.com</td>
+      <td>Twitter Web App</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1701176209076609121</td>
+      <td>1701176209076609121</td>
+      <td>https://twitter.com/iRizhao/status/17011762090...</td>
+      <td>2023-09-11 10:09:49+00:00</td>
+      <td>{'id': 1533663614770421761, 'id_str': '1533663...</td>
+      <td>en</td>
+      <td>The 2023 National Race Walking Championship &amp;a...</td>
+      <td>5</td>
+      <td>34</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;a href="https://mobile.twitter.com" rel="nofo...</td>
+      <td>https://mobile.twitter.com</td>
+      <td>Twitter Web App</td>
+      <td>{'photos': [{'url': 'https://pbs.twimg.com/med...</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>1701684889081307215</td>
+      <td>1701684889081307215</td>
+      <td>https://twitter.com/_awskl/status/170168488908...</td>
+      <td>2023-09-12 19:51:07+00:00</td>
+      <td>{'id': 390988524, 'id_str': '390988524', 'url'...</td>
+      <td>es</td>
+      <td>@Palomin17772524 @mjcabrerar @BArevalodeLeon @...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.701684e+18</td>
+      <td>{'id': 1420560045323038720, 'username': 'Palom...</td>
+      <td>&lt;a href="http://twitter.com/download/android" ...</td>
+      <td>http://twitter.com/download/android</td>
+      <td>Twitter for Android</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>1701684719815970972</td>
+      <td>1701684719815970972</td>
+      <td>https://twitter.com/Mr_andrew89/status/1701684...</td>
+      <td>2023-09-12 19:50:27+00:00</td>
+      <td>{'id': 454924874, 'id_str': '454924874', 'url'...</td>
+      <td>es</td>
+      <td>@ASolaresM @Mike051270 @BArevalodeLeon Otro es...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.701329e+18</td>
+      <td>{'id': 310913844, 'username': 'ASolaresM', 'di...</td>
+      <td>&lt;a href="http://twitter.com/download/iphone" r...</td>
+      <td>http://twitter.com/download/iphone</td>
+      <td>Twitter for iPhone</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
 </div>
-<div class="cell">
+</div>
+</div>
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trafico.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>id</th>
+      <th>id_str</th>
+      <th>url</th>
+      <th>date</th>
+      <th>user</th>
+      <th>lang</th>
+      <th>rawContent</th>
+      <th>replyCount</th>
+      <th>retweetCount</th>
+      <th>...</th>
+      <th>quotedTweet</th>
+      <th>place</th>
+      <th>coordinates</th>
+      <th>inReplyToTweetId</th>
+      <th>inReplyToUser</th>
+      <th>source</th>
+      <th>sourceUrl</th>
+      <th>sourceLabel</th>
+      <th>media</th>
+      <th>_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1701654244858679742</td>
+      <td>1701654244858679742</td>
+      <td>https://twitter.com/EmisorasUnidas/status/1701...</td>
+      <td>2023-09-12 17:49:21+00:00</td>
+      <td>{'id': 40256008, 'id_str': '40256008', 'url': ...</td>
+      <td>es</td>
+      <td>#AHORA Amílcar Montejo, director de Comunicaci...</td>
+      <td>1</td>
+      <td>2</td>
+      <td>...</td>
+      <td>{'id': 1701651855212691764, 'id_str': '1701651...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;a href="https://twitter.com" rel="nofollow"&gt;T...</td>
+      <td>https://twitter.com</td>
+      <td>TweetDeck Web App</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1701651855212691764</td>
+      <td>1701651855212691764</td>
+      <td>https://twitter.com/amilcarmontejo/status/1701...</td>
+      <td>2023-09-12 17:39:52+00:00</td>
+      <td>{'id': 372126670, 'id_str': '372126670', 'url'...</td>
+      <td>es</td>
+      <td>CONDUCTORA QUE SE NEGÓ A MOVILIZAR VEHÍCULO ES...</td>
+      <td>149</td>
+      <td>78</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;a href="http://twitter.com/download/iphone" r...</td>
+      <td>http://twitter.com/download/iphone</td>
+      <td>Twitter for iPhone</td>
+      <td>{'photos': [{'url': 'https://pbs.twimg.com/med...</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1701348453916311903</td>
+      <td>1701348453916311903</td>
+      <td>https://twitter.com/edgarduarteagui/status/170...</td>
+      <td>2023-09-11 21:34:15+00:00</td>
+      <td>{'id': 100815432, 'id_str': '100815432', 'url'...</td>
+      <td>es</td>
+      <td>Camión de arena volteado en el viaducto el pul...</td>
+      <td>2</td>
+      <td>1</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;a href="http://twitter.com/download/android" ...</td>
+      <td>http://twitter.com/download/android</td>
+      <td>Twitter for Android</td>
+      <td>{'photos': [], 'videos': [], 'animated': []}</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>1701995859229958189</td>
+      <td>1701995859229958189</td>
+      <td>https://twitter.com/DrDavidCabrera/status/1701...</td>
+      <td>2023-09-13 16:26:49+00:00</td>
+      <td>{'id': 743252657083650048, 'id_str': '74325265...</td>
+      <td>es</td>
+      <td>Paciente de 39 años, dolor lumbar de 1 año tra...</td>
+      <td>3</td>
+      <td>17</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;a href="https://help.twitter.com/en/using-twi...</td>
+      <td>https://help.twitter.com/en/using-twitter/how-...</td>
+      <td>advertiser-interface</td>
+      <td>{'photos': [{'url': 'https://pbs.twimg.com/med...</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>1701216420997017888</td>
+      <td>1701216420997017888</td>
+      <td>https://twitter.com/EmisorasUnidas/status/1701...</td>
+      <td>2023-09-11 12:49:36+00:00</td>
+      <td>{'id': 40256008, 'id_str': '40256008', 'url': ...</td>
+      <td>es</td>
+      <td>#AHORA Amílcar Montejo, director de Comunicaci...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;a href="https://twitter.com" rel="nofollow"&gt;T...</td>
+      <td>https://twitter.com</td>
+      <td>TweetDeck Web App</td>
+      <td>{'photos': [{'url': 'https://pbs.twimg.com/med...</td>
+      <td>snscrape.modules.twitter.Tweet</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
 </div>
-<div class="cell">
+</div>
+</div>
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
@@ -193,106 +667,273 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'rawContent'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">str</span>.upper()</span>
 <span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\Juan_Avila\AppData\Local\Temp\ipykernel_19304\2482464058.py:19: FutureWarning: The default value of regex will change from True to False in a future version.
+  bernardo['rawContent'] = bernardo['rawContent'].str.replace('[{}]'.format(string.punctuation), '')
+C:\Users\Juan_Avila\AppData\Local\Temp\ipykernel_19304\2482464058.py:20: FutureWarning: The default value of regex will change from True to False in a future version.
+  sandra['rawContent'] = sandra['rawContent'].str.replace('[{}]'.format(string.punctuation), '')
+C:\Users\Juan_Avila\AppData\Local\Temp\ipykernel_19304\2482464058.py:21: FutureWarning: The default value of regex will change from True to False in a future version.
+  trafico['rawContent'] = trafico['rawContent'].str.replace('[{}]'.format(string.punctuation), '')
+[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\Juan_Avila\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bernardo[<span class="st">'rawContent'</span>].head())</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sandra[<span class="st">'rawContent'</span>].head())</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trafico[<span class="st">'rawContent'</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bernardo.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bernardo[<span class="st">'rawContent'</span>].head())</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sandra[<span class="st">'rawContent'</span>].head())</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trafico[<span class="st">'rawContent'</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    ANONGTRELOADED MSEMILLAGT BAREVALODELEON JAJAJ...
+1    ASIERVERA AZTECANOTICIAGT BAREVALODELEON DOS V...
+2    PACIENTE 39 AÑOS DOLOR LUMBAR 1 AÑO TRAS CAÍDA...
+3    VICZACARIASGT SOY502 BAREVALODELEON MSEMILLAGT...
+4    IGORBITKOV NO SIGAN JUEGO RUSO INVASOR ENERO S...
+Name: rawContent, dtype: object
+0    BERNARDOSILVAGT BAREVALODELEON DRGIAMMATTEI ME...
+1    AWSKL MJCABRERAR BAREVALODELEON TSEGUATEMALA D...
+2    THE 2023 NATIONAL RACE WALKING CHAMPIONSHIP AM...
+3    PALOMIN17772524 MJCABRERAR BAREVALODELEON TSEG...
+4    ASOLARESM MIKE051270 BAREVALODELEON OTRO ESTUP...
+Name: rawContent, dtype: object
+0    AHORA AMÍLCAR MONTEJO DIRECTOR COMUNICACIÓN EM...
+1    CONDUCTORA QUE SE NEGÓ A MOVILIZAR VEHÍCULO ES...
+2    CAMIÓN ARENA VOLTEADO VIADUCTO PULTÉ HACIA HAC...
+3    PACIENTE 39 AÑOS DOLOR LUMBAR 1 AÑO TRAS CAÍDA...
+4    AHORA AMÍLCAR MONTEJO DIRECTOR COMUNICACIÓN EM...
+Name: rawContent, dtype: object</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sandra.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>trafico.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bernardo.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 4212 entries, 0 to 4211
+Data columns (total 29 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------            --------------  -----  
+ 0   Unnamed: 0        4212 non-null   int64  
+ 1   id                4212 non-null   int64  
+ 2   id_str            4212 non-null   int64  
+ 3   url               4212 non-null   object 
+ 4   date              4212 non-null   object 
+ 5   user              4212 non-null   object 
+ 6   lang              4212 non-null   object 
+ 7   rawContent        4212 non-null   object 
+ 8   replyCount        4212 non-null   int64  
+ 9   retweetCount      4212 non-null   int64  
+ 10  likeCount         4212 non-null   int64  
+ 11  quoteCount        4212 non-null   int64  
+ 12  conversationId    4212 non-null   int64  
+ 13  hashtags          4212 non-null   object 
+ 14  cashtags          4212 non-null   object 
+ 15  mentionedUsers    4212 non-null   object 
+ 16  links             4212 non-null   object 
+ 17  viewCount         4135 non-null   float64
+ 18  retweetedTweet    1 non-null      object 
+ 19  quotedTweet       182 non-null    object 
+ 20  place             61 non-null     object 
+ 21  coordinates       0 non-null      float64
+ 22  inReplyToTweetId  2303 non-null   float64
+ 23  inReplyToUser     2423 non-null   object 
+ 24  source            4212 non-null   object 
+ 25  sourceUrl         4212 non-null   object 
+ 26  sourceLabel       4212 non-null   object 
+ 27  media             4212 non-null   object 
+ 28  _type             4212 non-null   object 
+dtypes: float64(3), int64(8), object(18)
+memory usage: 954.4+ KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sandra.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 5784 entries, 0 to 5783
+Data columns (total 29 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------            --------------  -----  
+ 0   Unnamed: 0        5784 non-null   int64  
+ 1   id                5784 non-null   int64  
+ 2   id_str            5784 non-null   int64  
+ 3   url               5784 non-null   object 
+ 4   date              5784 non-null   object 
+ 5   user              5784 non-null   object 
+ 6   lang              5784 non-null   object 
+ 7   rawContent        5784 non-null   object 
+ 8   replyCount        5784 non-null   int64  
+ 9   retweetCount      5784 non-null   int64  
+ 10  likeCount         5784 non-null   int64  
+ 11  quoteCount        5784 non-null   int64  
+ 12  conversationId    5784 non-null   int64  
+ 13  hashtags          5784 non-null   object 
+ 14  cashtags          5784 non-null   object 
+ 15  mentionedUsers    5784 non-null   object 
+ 16  links             5784 non-null   object 
+ 17  viewCount         4962 non-null   float64
+ 18  retweetedTweet    1 non-null      object 
+ 19  quotedTweet       362 non-null    object 
+ 20  place             97 non-null     object 
+ 21  coordinates       0 non-null      float64
+ 22  inReplyToTweetId  2950 non-null   float64
+ 23  inReplyToUser     3181 non-null   object 
+ 24  source            5784 non-null   object 
+ 25  sourceUrl         5784 non-null   object 
+ 26  sourceLabel       5784 non-null   object 
+ 27  media             5784 non-null   object 
+ 28  _type             5784 non-null   object 
+dtypes: float64(3), int64(8), object(18)
+memory usage: 1.3+ MB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>trafico.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 12631 entries, 0 to 12630
+Data columns (total 29 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------            --------------  -----  
+ 0   Unnamed: 0        12631 non-null  int64  
+ 1   id                12631 non-null  int64  
+ 2   id_str            12631 non-null  int64  
+ 3   url               12631 non-null  object 
+ 4   date              12631 non-null  object 
+ 5   user              12631 non-null  object 
+ 6   lang              12631 non-null  object 
+ 7   rawContent        12631 non-null  object 
+ 8   replyCount        12631 non-null  int64  
+ 9   retweetCount      12631 non-null  int64  
+ 10  likeCount         12631 non-null  int64  
+ 11  quoteCount        12631 non-null  int64  
+ 12  conversationId    12631 non-null  int64  
+ 13  hashtags          12631 non-null  object 
+ 14  cashtags          12631 non-null  object 
+ 15  mentionedUsers    12631 non-null  object 
+ 16  links             12631 non-null  object 
+ 17  viewCount         7237 non-null   float64
+ 18  retweetedTweet    1 non-null      object 
+ 19  quotedTweet       926 non-null    object 
+ 20  place             405 non-null    object 
+ 21  coordinates       2 non-null      object 
+ 22  inReplyToTweetId  4541 non-null   float64
+ 23  inReplyToUser     5411 non-null   object 
+ 24  source            12631 non-null  object 
+ 25  sourceUrl         12631 non-null  object 
+ 26  sourceLabel       12631 non-null  object 
+ 27  media             12631 non-null  object 
+ 28  _type             12631 non-null  object 
+dtypes: float64(2), int64(8), object(19)
+memory usage: 2.8+ MB</code></pre>
+</div>
 </div>
 <section id="problema-1" class="level2">
 <h2 class="anchored" data-anchor-id="problema-1">Problema 1</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="op">=</span> trafico.corr()</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>sns.heatmap(correlation_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Matriz de correlación"</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>trafico, x<span class="op">=</span><span class="st">'retweetCount'</span>, y<span class="op">=</span><span class="st">'likeCount'</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Relación entre Retweets y Likes"</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="op">=</span> trafico.corr()</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>sns.heatmap(correlation_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Matriz de correlación"</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>trafico, x<span class="op">=</span><span class="st">'retweetCount'</span>, y<span class="op">=</span><span class="st">'likeCount'</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Relación entre Retweets y Likes"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\Juan_Avila\AppData\Local\Temp\ipykernel_19304\4075061463.py:4: FutureWarning: The default value of numeric_only in DataFrame.corr is deprecated. In a future version, it will default to False. Select only valid columns or specify the value of numeric_only to silence this warning.
+  correlation_matrix = trafico.corr()</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>keyword_lluvia <span class="op">=</span> [<span class="st">"LLUVIA"</span>, <span class="st">"LLOVIENDO"</span>, <span class="st">"MOJADO"</span>]</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>keyword_trafico <span class="op">=</span> [<span class="st">"TRAFICO"</span>, <span class="st">"CONGESTIÓN"</span>, <span class="st">"ATASCADO"</span>]</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'lluvia'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">any</span>(keyword <span class="kw">in</span> x <span class="cf">for</span> keyword <span class="kw">in</span> keyword_lluvia))</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'trafico'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">any</span>(keyword <span class="kw">in</span> x <span class="cf">for</span> keyword <span class="kw">in</span> keyword_trafico))</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>daily_counts <span class="op">=</span> trafico.groupby(trafico[<span class="st">'date'</span>].astype(<span class="st">'datetime64'</span>).dt.date)[[<span class="st">'lluvia'</span>, <span class="st">'trafico'</span>]].<span class="bu">sum</span>()</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar menciones de lluvia</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>))</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>daily_counts[<span class="st">'lluvia'</span>].plot(label<span class="op">=</span><span class="st">'Menciones de lluvia'</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Menciones diarias relacionadas con lluvia'</span>)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de menciones'</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar menciones de tráfico</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>))</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>daily_counts[<span class="st">'trafico'</span>].plot(label<span class="op">=</span><span class="st">'Menciones de tráfico'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Menciones diarias relacionadas con tráfico'</span>)</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de menciones'</span>)</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="lab6_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Palabras clave relacionadas con el socavón y la universidad</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>keywords_sinkhole <span class="op">=</span> [<span class="st">'SOCAVÓN'</span>, <span class="st">'ZONA 5'</span>]</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>keywords_university <span class="op">=</span> [<span class="st">'UVG'</span>, <span class="st">'ZONA 16'</span>, <span class="st">'LANDIVAR'</span>, <span class="st">'ZONA 15'</span>]</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Identificar tweets que contienen esas palabras clave</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'sinkhole_related'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">any</span>(keyword <span class="kw">in</span> x <span class="cf">for</span> keyword <span class="kw">in</span> keywords_sinkhole))</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'university_related'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">any</span>(keyword <span class="kw">in</span> x <span class="cf">for</span> keyword <span class="kw">in</span> keywords_university))</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Contar tweets diarios relacionados con el socavón y la universidad</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>conteo_diario_2023 <span class="op">=</span> trafico[trafico[<span class="st">'date'</span>].astype(<span class="st">'datetime64'</span>).dt.year <span class="op">==</span> <span class="dv">2023</span>].groupby(trafico[<span class="st">'date'</span>].astype(<span class="st">'datetime64'</span>).dt.date)[[<span class="st">'sinkhole_related'</span>, <span class="st">'university_related'</span>]].<span class="bu">sum</span>()</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Tomar solo los del 2023</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar menciones de socavón</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>))</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>conteo_diario_2023[<span class="st">'sinkhole_related'</span>].plot(label<span class="op">=</span><span class="st">'Menciones de socavón en zona 5'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Menciones diarias relacionadas con el socavón en zona 5'</span>)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de menciones'</span>)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar menciones de la universidad</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>))</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>conteo_diario_2023[<span class="st">'university_related'</span>].plot(label<span class="op">=</span><span class="st">'Menciones de la universidad'</span>, color<span class="op">=</span><span class="st">'purple'</span>)</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Menciones diarias relacionadas con la universidad'</span>)</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de menciones'</span>)</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="lab6_files/figure-html/cell-11-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>keyword_lluvia <span class="op">=</span> [<span class="st">"LLUVIA"</span>, <span class="st">"LLOVIENDO"</span>, <span class="st">"MOJADO"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>keyword_trafico <span class="op">=</span> [<span class="st">"TRAFICO"</span>, <span class="st">"CONGESTIÓN"</span>, <span class="st">"ATASCADO"</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'lluvia'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">any</span>(keyword <span class="kw">in</span> x <span class="cf">for</span> keyword <span class="kw">in</span> keyword_lluvia))</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'trafico'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">any</span>(keyword <span class="kw">in</span> x <span class="cf">for</span> keyword <span class="kw">in</span> keyword_trafico))</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>daily_counts <span class="op">=</span> trafico.groupby(trafico[<span class="st">'date'</span>].astype(<span class="st">'datetime64'</span>).dt.date)[[<span class="st">'lluvia'</span>, <span class="st">'trafico'</span>]].<span class="bu">sum</span>()</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar menciones de lluvia</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>))</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>daily_counts[<span class="st">'lluvia'</span>].plot(label<span class="op">=</span><span class="st">'Menciones de lluvia'</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Menciones diarias relacionadas con lluvia'</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de menciones'</span>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar menciones de tráfico</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>))</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>daily_counts[<span class="st">'trafico'</span>].plot(label<span class="op">=</span><span class="st">'Menciones de tráfico'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Menciones diarias relacionadas con tráfico'</span>)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de menciones'</span>)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="lab6_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="lab6_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Palabras clave relacionadas con el socavón y la universidad</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>keywords_sinkhole <span class="op">=</span> [<span class="st">'SOCAVÓN'</span>, <span class="st">'ZONA 5'</span>]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>keywords_university <span class="op">=</span> [<span class="st">'UVG'</span>, <span class="st">'ZONA 16'</span>, <span class="st">'LANDIVAR'</span>, <span class="st">'ZONA 15'</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Identificar tweets que contienen esas palabras clave</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'sinkhole_related'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">any</span>(keyword <span class="kw">in</span> x <span class="cf">for</span> keyword <span class="kw">in</span> keywords_sinkhole))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>trafico[<span class="st">'university_related'</span>] <span class="op">=</span> trafico[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">any</span>(keyword <span class="kw">in</span> x <span class="cf">for</span> keyword <span class="kw">in</span> keywords_university))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Contar tweets diarios relacionados con el socavón y la universidad</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>conteo_diario_2023 <span class="op">=</span> trafico[trafico[<span class="st">'date'</span>].astype(<span class="st">'datetime64'</span>).dt.year <span class="op">==</span> <span class="dv">2023</span>].groupby(trafico[<span class="st">'date'</span>].astype(<span class="st">'datetime64'</span>).dt.date)[[<span class="st">'sinkhole_related'</span>, <span class="st">'university_related'</span>]].<span class="bu">sum</span>()</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Tomar solo los del 2023</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar menciones de socavón</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>))</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>conteo_diario_2023[<span class="st">'sinkhole_related'</span>].plot(label<span class="op">=</span><span class="st">'Menciones de socavón en zona 5'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Menciones diarias relacionadas con el socavón en zona 5'</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de menciones'</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar menciones de la universidad</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>))</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>conteo_diario_2023[<span class="st">'university_related'</span>].plot(label<span class="op">=</span><span class="st">'Menciones de la universidad'</span>, color<span class="op">=</span><span class="st">'purple'</span>)</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Menciones diarias relacionadas con la universidad'</span>)</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de menciones'</span>)</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="lab6_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="lab6_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 <section id="preguntas" class="level3">
 <h3 class="anchored" data-anchor-id="preguntas">Preguntas</h3>
@@ -303,125 +944,131 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="problema-2" class="level2">
 <h2 class="anchored" data-anchor-id="problema-2">Problema 2</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> textblob <span class="im">import</span> TextBlob</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_polarity(text):</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> TextBlob(text).sentiment.polarity</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>bernardo[<span class="st">'polarity'</span>] <span class="op">=</span> bernardo[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(get_polarity)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>polaridad <span class="op">=</span> bernardo[<span class="st">'polarity'</span>].mean()</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Polaridad de los tweets de Bernardo: '</span>, polaridad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> textblob <span class="im">import</span> TextBlob</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_polarity(text):</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> TextBlob(text).sentiment.polarity</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>bernardo[<span class="st">'polarity'</span>] <span class="op">=</span> bernardo[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(get_polarity)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>polaridad <span class="op">=</span> bernardo[<span class="st">'polarity'</span>].mean()</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Polaridad de los tweets de Bernardo: '</span>, polaridad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Polaridad de los tweets de Bernardo:  0.01938769243765174</code></pre>
+</div>
 </div>
 <p>Se puede observar que los tweets son más neutros que positivos y negativos, esto se puede deber a que la mayoría de tweets son de noticias y no de opiniones.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>percentiles <span class="op">=</span> bernardo[[<span class="st">'retweetCount'</span>, <span class="st">'likeCount'</span>, <span class="st">'replyCount'</span>]].quantile(<span class="fl">0.9</span>).to_dict()</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>percentiles</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>influencer_tweets <span class="op">=</span> bernardo[</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    ((bernardo[<span class="st">'retweetCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'retweetCount'</span>]) <span class="op">+</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>     (bernardo[<span class="st">'likeCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'likeCount'</span>]) <span class="op">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>     (bernardo[<span class="st">'replyCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'replyCount'</span>])) <span class="op">&gt;=</span> <span class="dv">2</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>influencer_users <span class="op">=</span> influencer_tweets[<span class="st">'user'</span>].tolist()</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>unique_influencers <span class="op">=</span> {}</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> user_info <span class="kw">in</span> influencer_users:</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    user_id <span class="op">=</span> user_info[<span class="st">'id'</span>]</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> user_id <span class="kw">not</span> <span class="kw">in</span> unique_influencers:</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        unique_influencers[user_id] <span class="op">=</span> {</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"username"</span>: user_info[<span class="st">'username'</span>],</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"displayname"</span>: user_info[<span class="st">'displayname'</span>],</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"url"</span>: user_info[<span class="st">'url'</span>]</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>influencer_df <span class="op">=</span> pd.DataFrame(unique_influencers.values())</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> influencer_df.empty:</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No hay influencers."</span>)</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Los influencers son:"</span>, influencer_df[<span class="st">'username'</span>].tolist())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>percentiles <span class="op">=</span> bernardo[[<span class="st">'retweetCount'</span>, <span class="st">'likeCount'</span>, <span class="st">'replyCount'</span>]].quantile(<span class="fl">0.9</span>).to_dict()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>percentiles</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>influencer_tweets <span class="op">=</span> bernardo[</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    ((bernardo[<span class="st">'retweetCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'retweetCount'</span>]) <span class="op">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>     (bernardo[<span class="st">'likeCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'likeCount'</span>]) <span class="op">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>     (bernardo[<span class="st">'replyCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'replyCount'</span>])) <span class="op">&gt;=</span> <span class="dv">2</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>influencer_users <span class="op">=</span> influencer_tweets[<span class="st">'user'</span>].tolist()</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>unique_influencers <span class="op">=</span> {}</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> user_info <span class="kw">in</span> influencer_users:</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    user_id <span class="op">=</span> user_info[<span class="st">'id'</span>]</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> user_id <span class="kw">not</span> <span class="kw">in</span> unique_influencers:</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        unique_influencers[user_id] <span class="op">=</span> {</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"username"</span>: user_info[<span class="st">'username'</span>],</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"displayname"</span>: user_info[<span class="st">'displayname'</span>],</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"url"</span>: user_info[<span class="st">'url'</span>]</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>influencer_df <span class="op">=</span> pd.DataFrame(unique_influencers.values())</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> influencer_df.empty:</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No hay influencers."</span>)</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Los influencers son:"</span>, influencer_df[<span class="st">'username'</span>].tolist())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>No hay influencers.</code></pre>
+</div>
 </div>
 <p>Tras ver los resultados se puede concluir que no hay influencers, porque ninguno de los usuarios que cumplan con al menos 2 requisitos. Por lo tanto no se encuentran influencers.</p>
-<div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>direct_interactions <span class="op">=</span> bernardo[bernardo[<span class="st">'inReplyToUser'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">isinstance</span>(x, <span class="bu">dict</span>) <span class="kw">and</span> x[<span class="st">'username'</span>] <span class="op">==</span> <span class="st">'BArevalodeLeon'</span>)]</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de interacciones directas con Bernardo:"</span>, <span class="bu">len</span>(direct_interactions))</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>indirect_interactions <span class="op">=</span> bernardo[</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    (bernardo[<span class="st">'rawContent'</span>].<span class="bu">str</span>.contains(<span class="st">'BArevalodeLeon'</span>, case<span class="op">=</span><span class="va">False</span>)) <span class="op">&amp;</span> </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>(bernardo[<span class="st">'id'</span>].isin(direct_interactions[<span class="st">'id'</span>]))</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de interacciones indirectas con Bernardo:"</span>, <span class="bu">len</span>(indirect_interactions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>direct_interactions <span class="op">=</span> bernardo[bernardo[<span class="st">'inReplyToUser'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">isinstance</span>(x, <span class="bu">dict</span>) <span class="kw">and</span> x[<span class="st">'username'</span>] <span class="op">==</span> <span class="st">'BArevalodeLeon'</span>)]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de interacciones directas con Bernardo:"</span>, <span class="bu">len</span>(direct_interactions))</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>indirect_interactions <span class="op">=</span> bernardo[</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    (bernardo[<span class="st">'rawContent'</span>].<span class="bu">str</span>.contains(<span class="st">'BArevalodeLeon'</span>, case<span class="op">=</span><span class="va">False</span>)) <span class="op">&amp;</span> </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>(bernardo[<span class="st">'id'</span>].isin(direct_interactions[<span class="st">'id'</span>]))</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de interacciones indirectas con Bernardo:"</span>, <span class="bu">len</span>(indirect_interactions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Número de interacciones directas con Bernardo: 0
 Número de interacciones indirectas con Bernardo: 2643</code></pre>
 </div>
 </div>
 <p>De este análilis se puede concluir que todas las interacciones con la cuenta de Bernardo Arévalo son neutras, que puede ser por que su contenido puede ser más inforamtivo que mostrando opiniones. Asimismo, las interacciones son indirectas es decir que no hay una conversación directa con el usuario sino que menciones a su cuenta.</p>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> textblob <span class="im">import</span> TextBlob</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>sandra[<span class="st">'polarity'</span>] <span class="op">=</span> sandra[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(get_polarity)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>polaridad <span class="op">=</span> sandra[<span class="st">'polarity'</span>].mean()</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Polaridad de los tweets de Sandra: '</span>, polaridad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> textblob <span class="im">import</span> TextBlob</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>sandra[<span class="st">'polarity'</span>] <span class="op">=</span> sandra[<span class="st">'rawContent'</span>].<span class="bu">apply</span>(get_polarity)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>polaridad <span class="op">=</span> sandra[<span class="st">'polarity'</span>].mean()</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Polaridad de los tweets de Sandra: '</span>, polaridad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Polaridad de los tweets de Sandra:  0.014774158467660246</code></pre>
 </div>
 </div>
 <p>Se puede observar que la mayoría de tweets son neutros, esto se puede deber a que la mayoría de tweets son de noticias y no de opiniones al igual que con los datos anteriores.</p>
-<div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>percentiles <span class="op">=</span> sandra[[<span class="st">'retweetCount'</span>, <span class="st">'likeCount'</span>, <span class="st">'replyCount'</span>]].quantile(<span class="fl">0.9</span>).to_dict()</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>percentiles</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>influencer_tweets <span class="op">=</span> sandra[</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    ((sandra[<span class="st">'retweetCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'retweetCount'</span>]) <span class="op">+</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>     (sandra[<span class="st">'likeCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'likeCount'</span>]) <span class="op">+</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>     (sandra[<span class="st">'replyCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'replyCount'</span>])) <span class="op">&gt;=</span> <span class="dv">2</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>influencer_users <span class="op">=</span> influencer_tweets[<span class="st">'user'</span>].tolist()</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>unique_influencers <span class="op">=</span> {}</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> user_info <span class="kw">in</span> influencer_users:</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    user_id <span class="op">=</span> user_info[<span class="st">'id'</span>]</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> user_id <span class="kw">not</span> <span class="kw">in</span> unique_influencers:</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        unique_influencers[user_id] <span class="op">=</span> {</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"username"</span>: user_info[<span class="st">'username'</span>],</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"displayname"</span>: user_info[<span class="st">'displayname'</span>],</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"url"</span>: user_info[<span class="st">'url'</span>]</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>influencer_df <span class="op">=</span> pd.DataFrame(unique_influencers.values())</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> influencer_df.empty:</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No hay influencers."</span>)</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Los influencers son:"</span>, influencer_df[<span class="st">'username'</span>].tolist())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>percentiles <span class="op">=</span> sandra[[<span class="st">'retweetCount'</span>, <span class="st">'likeCount'</span>, <span class="st">'replyCount'</span>]].quantile(<span class="fl">0.9</span>).to_dict()</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>percentiles</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>influencer_tweets <span class="op">=</span> sandra[</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    ((sandra[<span class="st">'retweetCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'retweetCount'</span>]) <span class="op">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>     (sandra[<span class="st">'likeCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'likeCount'</span>]) <span class="op">+</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>     (sandra[<span class="st">'replyCount'</span>] <span class="op">&gt;</span> percentiles[<span class="st">'replyCount'</span>])) <span class="op">&gt;=</span> <span class="dv">2</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>influencer_users <span class="op">=</span> influencer_tweets[<span class="st">'user'</span>].tolist()</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>unique_influencers <span class="op">=</span> {}</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> user_info <span class="kw">in</span> influencer_users:</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    user_id <span class="op">=</span> user_info[<span class="st">'id'</span>]</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> user_id <span class="kw">not</span> <span class="kw">in</span> unique_influencers:</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        unique_influencers[user_id] <span class="op">=</span> {</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"username"</span>: user_info[<span class="st">'username'</span>],</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"displayname"</span>: user_info[<span class="st">'displayname'</span>],</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"url"</span>: user_info[<span class="st">'url'</span>]</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>influencer_df <span class="op">=</span> pd.DataFrame(unique_influencers.values())</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> influencer_df.empty:</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No hay influencers."</span>)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Los influencers son:"</span>, influencer_df[<span class="st">'username'</span>].tolist())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>No hay influencers.</code></pre>
 </div>
 </div>
 <p>Al igual que con los datos anteriores, se puede concluir que no hay influencers, porque ninguno de los usuarios que cumplan con al menos 2 requisitos. Por lo tanto no se encuentran influencers.</p>
-<div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>direct_interactions <span class="op">=</span> sandra[sandra[<span class="st">'inReplyToUser'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">isinstance</span>(x, <span class="bu">dict</span>) <span class="kw">and</span> x[<span class="st">'username'</span>] <span class="op">==</span> <span class="st">'SandraTorresGUA'</span>)]</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de interacciones directas con Sandra:"</span>, <span class="bu">len</span>(direct_interactions))</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>indirect_interactions <span class="op">=</span> sandra[</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    (sandra[<span class="st">'rawContent'</span>].<span class="bu">str</span>.contains(<span class="st">'SandraTorresGUA'</span>, case<span class="op">=</span><span class="va">False</span>)) <span class="op">&amp;</span> </span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>(sandra[<span class="st">'id'</span>].isin(direct_interactions[<span class="st">'id'</span>]))</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de interacciones indirectas con Sandra:"</span>, <span class="bu">len</span>(indirect_interactions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>direct_interactions <span class="op">=</span> sandra[sandra[<span class="st">'inReplyToUser'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">isinstance</span>(x, <span class="bu">dict</span>) <span class="kw">and</span> x[<span class="st">'username'</span>] <span class="op">==</span> <span class="st">'SandraTorresGUA'</span>)]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de interacciones directas con Sandra:"</span>, <span class="bu">len</span>(direct_interactions))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>indirect_interactions <span class="op">=</span> sandra[</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    (sandra[<span class="st">'rawContent'</span>].<span class="bu">str</span>.contains(<span class="st">'SandraTorresGUA'</span>, case<span class="op">=</span><span class="va">False</span>)) <span class="op">&amp;</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>(sandra[<span class="st">'id'</span>].isin(direct_interactions[<span class="st">'id'</span>]))</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de interacciones indirectas con Sandra:"</span>, <span class="bu">len</span>(indirect_interactions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Número de interacciones directas con Sandra: 0
 Número de interacciones indirectas con Sandra: 852</code></pre>
